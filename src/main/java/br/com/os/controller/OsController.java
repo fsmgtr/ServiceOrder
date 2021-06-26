@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +16,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.os.domain.OrdemServico;
 import br.com.os.dto.osDto;
 import br.com.os.service.osService;
+
 @CrossOrigin("*")
 @RestController
 @RequestMapping(value = "/os")
@@ -27,11 +31,21 @@ public class OsController {
 
 	@Autowired
 	private osService osS;
-
+/*
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<osDto> findById(@PathVariable Long id) {
 		osDto osdto = new osDto(osS.findById(id));
 		return ResponseEntity.ok().body(osdto);
+	}
+
+	*/
+	@GetMapping(value = "/{id}") // Mapeia a URL
+	@ResponseBody // descrição da resposta
+	public ResponseEntity<OrdemServico> buscaruserid(@PathVariable Long id) {// recebe os dados para consulta
+		OrdemServico os = osS.findById(id).get();
+
+		return new ResponseEntity<OrdemServico>(os, HttpStatus.OK);
+
 	}
 
 	@GetMapping
@@ -48,15 +62,12 @@ public class OsController {
 		return ResponseEntity.created(uri).build();
 
 	}
-	
-	@PutMapping 
+
+	@PutMapping
 	public ResponseEntity<osDto> update(@Valid @RequestBody osDto osdto) {
 		osdto = new osDto(osS.update(osdto));
 
 		return ResponseEntity.ok().body(osdto);
 	}
-	
-	
-	
 
 }

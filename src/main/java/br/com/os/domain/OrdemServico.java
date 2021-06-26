@@ -42,6 +42,9 @@ public class OrdemServico implements Serializable {
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 
+	
+	 
+
 	public OrdemServico() {
 		super();
 		this.setDataAbertura(LocalDateTime.now());

@@ -54,12 +54,12 @@ public class osService {
 		ordemServico.setPrioridade(Prioridade.toEnum(osdto.getPrioridade()));
 		ordemServico.setStatus(Status.toEnum(osdto.getStatus()));
 
-		Object tecnico = tecnicoRepository.findById(osdto.getTecnico());
-		Object cliente = clienteRepository.findById(osdto.getCliente());
+		Tecnico tecnico = tecnicoRepository.findById(osdto.getTecnico()).get();
+		 Cliente cliente = clienteRepository.findById(osdto.getCliente()).get();
 
-		ordemServico.setCliente((Cliente) cliente);
-		ordemServico.setTecnico((Tecnico) tecnico);
-		
+		ordemServico.setCliente(cliente);
+		ordemServico.setTecnico(tecnico);
+		 
 		
 		if(ordemServico.getStatus().getCod().equals(2)) {
 			ordemServico.setDataFechamento(LocalDateTime.now());

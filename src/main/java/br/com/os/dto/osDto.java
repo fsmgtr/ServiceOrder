@@ -9,6 +9,7 @@ import javax.validation.constraints.NotEmpty;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import br.com.os.domain.OrdemServico;
+import br.com.os.enuns.Prioridade;
 
 public class osDto implements Serializable {
 
@@ -17,45 +18,49 @@ public class osDto implements Serializable {
 	private LocalDateTime dataAbertura;
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private LocalDateTime dataFechamento;
-	
-	@NotEmpty(message="O campo Obs é obrigatório")
+
+	@NotEmpty(message = "O campo Obs é obrigatório")
 	private String observacoes;
 	private Integer prioridade;
 	private Integer status;
-	 
+
 	private Long tecnico;
-	 
+
 	private Long cliente;
 
 	private Long id;
 
-	 
-	
-	public osDto(Optional<OrdemServico> os) {
+	public osDto() {
 		super();
-		this.id = os.get().getId();
-		this.dataAbertura = os.get().getDataAbertura();
-		this.dataFechamento = os.get().getDataFechamento();
-		this.observacoes = os.get().getObservacoes();
-		this.prioridade = os.get().getPrioridade().getCod();
-		this.status = os.get().getStatus().getCod();
-		this.tecnico = os.get().getTecnico().getId();
-		this.cliente = os.get().getCliente().getId();
 	}
-	
-	
+
 	public osDto(OrdemServico os) {
 		super();
-		this.id = os.getId();
 		this.dataAbertura = os.getDataAbertura();
 		this.dataFechamento = os.getDataFechamento();
 		this.observacoes = os.getObservacoes();
 		this.prioridade = os.getPrioridade().getCod();
 		this.status = os.getStatus().getCod();
-		this.tecnico = os.getTecnico().getId();
-		this.cliente = os.getCliente().getId();
+		tecnico = os.getTecnico().getId();
+		cliente = os.getCliente().getId();
+		this.id = os.getId();
 	}
-	
+
+	public Long getTecnico() {
+		return tecnico;
+	}
+
+	public void setTecnico(Long tecnico) {
+		this.tecnico = tecnico;
+	}
+
+	public Long getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Long cliente) {
+		this.cliente = cliente;
+	}
 
 	public LocalDateTime getDataAbertura() {
 		return dataAbertura;
@@ -95,22 +100,6 @@ public class osDto implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-
-	public Long getTecnico() {
-		return tecnico;
-	}
-
-	public void setTecnico(Long tecnico) {
-		this.tecnico = tecnico;
-	}
-
-	public Long getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(Long cliente) {
-		this.cliente = cliente;
 	}
 
 	public Long getId() {

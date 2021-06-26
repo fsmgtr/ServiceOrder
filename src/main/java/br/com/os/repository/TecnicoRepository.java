@@ -16,4 +16,8 @@ public interface TecnicoRepository extends JpaRepository<Tecnico, Long> {
 	@Query(value=" SELECT t FROM Tecnico t WHERE t.cpf =:cpf")
 	Tecnico findByCPF(@Param("cpf") String cpf);
 
+	@Query(value=" SELECT t FROM Tecnico t WHERE t.id =:id")
+	Tecnico findByid2(@Param("id") Long id);
+	
+	
 }
